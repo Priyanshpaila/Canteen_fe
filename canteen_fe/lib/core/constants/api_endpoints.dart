@@ -2,7 +2,7 @@
 const String baseUrl = 'http://192.168.13.74:8000/api';
 
 // Sub URLs
-const String userUrl = '$baseUrl/user';
+const String userUrl = '$baseUrl/users';
 const String mealsUrl = '$baseUrl/meals';
 const String priceUrl = '$baseUrl/price';
 const String guestsUrl = '$baseUrl/guests';
