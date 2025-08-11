@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:developer';
 import 'package:canteen_fe/models/user_model.dart';
 import 'package:canteen_fe/providers/token_provider.dart';

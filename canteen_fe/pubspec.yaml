@@ -33,7 +33,7 @@ dependencies:
 
   # UI & Icons
   cupertino_icons: ^1.0.8
-  getwidget: ^3.1.1
+  
   table_calendar: ^3.0.9
 
   # State Management
