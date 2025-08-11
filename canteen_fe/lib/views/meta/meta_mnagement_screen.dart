@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 import 'package:canteen_fe/core/constants/api_endpoints.dart';
+import 'package:canteen_fe/providers/meta_provider.dart';
 import 'package:canteen_fe/providers/token_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -153,6 +154,7 @@ class _MetaManagementScreenState extends ConsumerState<MetaManagementScreen> {
         _createCtrl.clear();
         await fetchItems();
         showToast('$title added');
+       
       } else {
         showToast('Failed to add $title');
       }

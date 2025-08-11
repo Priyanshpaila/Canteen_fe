@@ -114,6 +114,8 @@ class SuperAdminHomeScreen extends ConsumerWidget {
                                 final divisions = ref.watch(
                                   divisionCountProvider,
                                 );
+                                ref.invalidate(divisionCountProvider);
+
                                 return _StatTile(
                                   title: 'Divisions',
                                   value: divisions.when(
@@ -131,6 +133,8 @@ class SuperAdminHomeScreen extends ConsumerWidget {
                                 final departments = ref.watch(
                                   departmentCountProvider,
                                 );
+                                ref.invalidate(departmentCountProvider);
+
                                 return _StatTile(
                                   title: 'Departments',
                                   value: departments.when(
@@ -148,6 +152,7 @@ class SuperAdminHomeScreen extends ConsumerWidget {
                                 final designations = ref.watch(
                                   designationCountProvider,
                                 );
+                                ref.invalidate(designationCountProvider);
                                 return _StatTile(
                                   title: 'Designations',
                                   value: designations.when(
@@ -170,7 +175,7 @@ class SuperAdminHomeScreen extends ConsumerWidget {
                 // Manage Metadata
                 SliverToBoxAdapter(
                   child: Padding(
-                    padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+                    padding: const EdgeInsets.fromLTRB(14, 14, 14, 6),
                     child: Text(
                       'Manage Metadata',
                       style: theme.textTheme.titleMedium?.copyWith(
@@ -197,7 +202,7 @@ class SuperAdminHomeScreen extends ConsumerWidget {
                           crossAxisCount: crossAxisCount,
                           mainAxisSpacing: 12,
                           crossAxisSpacing: 12,
-                          childAspectRatio: 1.15,
+                          childAspectRatio: 1.12,
                         ),
                         delegate: SliverChildListDelegate.fixed([
                           _ActionCard(
@@ -334,8 +339,8 @@ class _HeaderStrip extends StatelessWidget {
           ),
         ),
         const _RoleChip(label: 'Full Access'),
-        const SizedBox(width: 8),
-        const _RoleChip(label: 'Protected Routes'),
+        // const SizedBox(width: 8),
+        // const _RoleChip(label: 'Protected Routes'),
       ],
     );
   }
@@ -1413,7 +1418,7 @@ class _ActionCard extends StatelessWidget {
             border: Border.all(color: const Color(0xFFE5E7EB)),
           ),
           child: Padding(
-            padding: const EdgeInsets.all(14),
+            padding: const EdgeInsets.all(10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
