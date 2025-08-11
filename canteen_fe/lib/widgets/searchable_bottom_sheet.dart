@@ -45,17 +45,7 @@ Future<String?> showSearchableBottomSheet(
         onTap: () => FocusScope.of(ctx).unfocus(),
         child: Stack(
           children: [
-            // // Soft blurred circles for subtle depth
-            // Positioned(
-            //   right: -60,
-            //   bottom: 140,
-            //   child: _blurBlob(const Color(0xFFEEF2FF)),
-            // ),
-            // Positioned(
-            //   left: -80,
-            //   bottom: -40,
-            //   child: _blurBlob(const Color(0xFFE0E7FF)),
-            // ),
+         
             Container(
               padding: EdgeInsets.only(
                 left: 16,
@@ -208,8 +198,9 @@ Future<String?> showSearchableBottomSheet(
                                     >(
                                       valueListenable: searchCtrl,
                                       builder: (_, value, __) {
-                                        if (value.text.isEmpty)
+                                        if (value.text.isEmpty) {
                                           return const SizedBox.shrink();
+                                        }
                                         return IconButton(
                                           tooltip: "Clear",
                                           onPressed: () {

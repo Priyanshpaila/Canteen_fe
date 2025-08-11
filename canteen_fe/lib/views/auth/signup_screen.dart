@@ -60,6 +60,29 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
     super.dispose();
   }
 
+  /// Robustly parse meta list responses that can be either:
+  /// - List<dynamic>
+  /// - { count: number, items: List<dynamic> }
+  List<Map<String, dynamic>> _parseMetaList(String body) {
+    final decoded = jsonDecode(body);
+    final List raw =
+        decoded is List
+            ? decoded
+            : (decoded is Map && decoded['items'] is List)
+            ? decoded['items'] as List
+            : const [];
+    return raw
+        .whereType<Map>() // keep only map items
+        .map(
+          (e) => {
+            'id': e['_id']?.toString() ?? '',
+            'name': e['name']?.toString() ?? '',
+          },
+        )
+        .where((e) => e['id']!.isNotEmpty && e['name']!.isNotEmpty)
+        .toList();
+  }
+
   Future<void> fetchMetaLists() async {
     try {
       final dRes = await http.get(Uri.parse(getAllDivisionsUrl));
@@ -69,26 +92,28 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
       if (dRes.statusCode == 200 &&
           depRes.statusCode == 200 &&
           desigRes.statusCode == 200) {
+        final parsedDiv = _parseMetaList(dRes.body);
+        final parsedDep = _parseMetaList(depRes.body);
+        final parsedDes = _parseMetaList(desigRes.body);
+
         setState(() {
-          divisions = List<Map<String, dynamic>>.from(
-            jsonDecode(
-              dRes.body,
-            ).map((e) => {'id': e['_id'], 'name': e['name']}),
-          );
-          departments = List<Map<String, dynamic>>.from(
-            jsonDecode(
-              depRes.body,
-            ).map((e) => {'id': e['_id'], 'name': e['name']}),
-          );
-          designations = List<Map<String, dynamic>>.from(
-            jsonDecode(
-              desigRes.body,
-            ).map((e) => {'id': e['_id'], 'name': e['name']}),
-          );
+          divisions = parsedDiv;
+          departments = parsedDep;
+          designations = parsedDes;
         });
+      } else {
+        debugPrint(
+          'Meta fetch failed: div=${dRes.statusCode}, dep=${depRes.statusCode}, des=${desigRes.statusCode}',
+        );
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Failed to load metadata')),
+        );
       }
     } catch (e) {
       debugPrint("Meta fetch error: $e");
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Failed to load metadata')));
     }
   }
 
@@ -156,7 +181,6 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
         child: SafeArea(
           child: Stack(
             children: [
-              // Subtle gradient blobs
               Positioned(
                 top: -120,
                 right: -80,
@@ -167,7 +191,6 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                 left: -100,
                 child: _blurBlob(const Color(0xFFE0E7FF)),
               ),
-
               Center(
                 child: SingleChildScrollView(
                   padding: EdgeInsets.symmetric(
@@ -501,12 +524,12 @@ class _NeumorphicCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         boxShadow: const [
           BoxShadow(
-            color: Color(0x1A000000), // 10% black
+            color: Color(0x1A000000),
             blurRadius: 28,
             offset: Offset(0, 16),
           ),
           BoxShadow(
-            color: Color(0x0D000000), // 5% black
+            color: Color(0x0D000000),
             blurRadius: 6,
             offset: Offset(0, 2),
           ),
