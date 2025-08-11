@@ -69,7 +69,7 @@ class _MyAppState extends ConsumerState<MyApp> {
       title: 'Canteen App',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurpleAccent),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigoAccent),
         useMaterial3: true,
       ),
       home: startScreen,

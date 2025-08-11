@@ -19,9 +19,11 @@ const String logoutUrl = '$userUrl/logout';
 const String informdailyUrl = '$userUrl/inform-daily';
 const String markinformedUrl = '$userUrl/mark-informed';
 const String informedusersUrl = '$userUrl/informed-users'; // Admin/Superadmin
+const String profileUrl = '$userUrl/me'; 
 
 // Superadmin
 const String updateUserRoleUrl = '$userUrl/update-role';
+const String getAllUserUrl = '$userUrl/users';
 String deleteUserUrl(String userId) => '$userUrl/$userId';
 
 // DIVISION

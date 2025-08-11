@@ -45,6 +45,7 @@ dependencies:
 
   # Local Storage (for token, user data)
   shared_preferences: ^2.2.2
+  flutter_secure_storage: ^9.2.2
 
   # Form Validation & Routing (optional but recommended)
   form_field_validator: ^1.1.0

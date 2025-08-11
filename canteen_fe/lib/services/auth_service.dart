@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:canteen_fe/core/constants/api_endpoints.dart';
 import 'package:http/http.dart' as http;
 
-
 class AuthService {
   Future<Map<String, dynamic>> login(String phone, String pin) async {
     final response = await http.post(
@@ -45,6 +44,23 @@ class AuthService {
       return jsonDecode(response.body);
     } else {
       throw Exception(jsonDecode(response.body)['message'] ?? 'Signup failed');
+    }
+  }
+
+  /// ✅ Fetch logged-in user's profile
+  Future<Map<String, dynamic>> getProfile(String token) async {
+    final response = await http.get(
+      Uri.parse(profileUrl), // make sure profileUrl points to GET /profile
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body);
+    } else {
+      throw Exception(jsonDecode(response.body)['message'] ?? 'Failed to fetch profile');
     }
   }
 }
